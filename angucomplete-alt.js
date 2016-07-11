@@ -683,19 +683,25 @@
 
       scope.selectResult = function(result) {
         // Restore original values
-        if (scope.matchClass) {
-          result.title = extractTitle(result.originalObject);
-          result.description = extractValue(result.originalObject, scope.descriptionField);
-        }
+        result.clicked = true;
+        $timeout(function() {
+          result.clicked = false;
+        }, 800);
+        $timeout(function() {
+          if (scope.matchClass) {
+            result.title = extractTitle(result.originalObject);
+            result.description = extractValue(result.originalObject, scope.descriptionField);
+          }
 
-        if (scope.clearSelected) {
-          scope.searchStr = null;
-        }
-        else {
-          scope.searchStr = result.title;
-        }
-        callOrAssign(result);
-        clearResults();
+          if (scope.clearSelected) {
+            scope.searchStr = null;
+          }
+          else {
+            scope.searchStr = result.title;
+          }
+          callOrAssign(result);
+          clearResults();
+        }, 500);
       };
 
       scope.inputChangeHandler = function(str) {
